@@ -1,3 +1,0 @@
-module GOLANG-TODOAPP
-
-go 1.26
