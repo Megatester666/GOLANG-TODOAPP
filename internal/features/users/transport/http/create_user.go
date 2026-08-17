@@ -1,8 +1,6 @@
 package users_transport_http
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 
 	core_logger "github.com/Megatester666/golang-todoapp/internal/core/logger"
