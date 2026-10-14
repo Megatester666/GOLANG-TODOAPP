@@ -19,7 +19,7 @@ type APIVersionRouter struct {
 }
 
 func NewAPIVersionRouter(
-	apiVersion APIVersionRouter,
+	apiVersion ApiVersion,
 ) *APIVersionRouter {
 	return &APIVersionRouter{
 		ServeMux:   http.NewServeMux(),

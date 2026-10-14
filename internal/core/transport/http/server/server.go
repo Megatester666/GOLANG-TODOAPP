@@ -21,8 +21,7 @@ type HTTPServer struct {
 
 func NewHTTPServer(
 	config Config,
-	log *core_logger.Logger,
-) *HTTPServer {
+	log *core_logger.Logger, id core_http_middleware.Middleware, logger core_http_middleware.Middleware, middleware core_http_middleware.Middleware, trace core_http_middleware.Middleware) *HTTPServer {
 	return &HTTPServer{
 		mux:    http.NewServeMux(),
 		config: config,
@@ -30,7 +29,7 @@ func NewHTTPServer(
 	}
 }
 
-func (h *HTTPServer) RegisterAPIRouters(routers ...APIVersionRouter) {
+func (h *HTTPServer) RegisterAPIRouters(routers ...*APIVersionRouter) {
 	for _, router := range routers {
 		prefix := "/api/" + string(router.apiVersion)
 
@@ -47,7 +46,7 @@ func (h *HTTPServer) Run(ctx context.Context) error {
 
 	server := &http.Server{
 		Addr:    h.config.Addr,
-		Handler: h.mux,
+		Handler: mux,
 	}
 
 	ch := make(chan error, 1)
@@ -60,6 +59,7 @@ func (h *HTTPServer) Run(ctx context.Context) error {
 		err := server.ListenAndServe()
 
 		if !errors.Is(err, http.ErrServerClosed) {
+
 			ch <- err
 		}
 	}()

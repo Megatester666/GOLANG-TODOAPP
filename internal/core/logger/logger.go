@@ -26,9 +26,9 @@ func FromContext(ctx context.Context) *Logger {
 
 }
 
-func NewLogger(logLevel string) (*Logger, error) {
+func NewLogger(config LoggerConfig) (*Logger, error) {
 	zapLvl := zap.NewAtomicLevel()
-	if err := zapLvl.UnmarshalText([]byte(logLevel)); err != nil {
+	if err := zapLvl.UnmarshalText([]byte(config.Level)); err != nil {
 		return nil, fmt.Errorf("unmarshal loglevel: %w", err)
 	}
 
